@@ -1,0 +1,914 @@
+{
+    "NIFTY100 Qualty30": {
+        "symbol": "NIFTY100 QUALTY30",
+        "instrument_key": "NSE_INDEX|NIFTY100 Qualty30"
+    },
+    "BSE India Defence": {
+        "symbol": "INDDEF",
+        "instrument_key": "BSE_INDEX|INDDEF"
+    },
+    "Nifty Consumption": {
+        "symbol": "NIFTY CONSUMPTION",
+        "instrument_key": "NSE_INDEX|Nifty Consumption"
+    },
+    "Nifty Rural": {
+        "symbol": "NIFTY RURAL",
+        "instrument_key": "NSE_INDEX|Nifty Rural"
+    },
+    "BSE FINANCIAL SERVCS": {
+        "symbol": "FINSER",
+        "instrument_key": "BSE_INDEX|FINSER"
+    },
+    "Nifty CoreHousing": {
+        "symbol": "NIFTY COREHOUSING",
+        "instrument_key": "NSE_INDEX|Nifty CoreHousing"
+    },
+    "Nifty Realty": {
+        "symbol": "NIFTY REALTY",
+        "instrument_key": "NSE_INDEX|Nifty Realty"
+    },
+    "Nifty RailwaysPSU": {
+        "symbol": "NIFTY RAILWAYSPSU",
+        "instrument_key": "NSE_INDEX|Nifty RailwaysPSU"
+    },
+    "BSE INDIA 150": {
+        "symbol": "IND150",
+        "instrument_key": "BSE_INDEX|IND150"
+    },
+    "BSE BANKEX": {
+        "symbol": "BANKEX",
+        "instrument_key": "BSE_INDEX|BANKEX"
+    },
+    "HANG SENG": {
+        "symbol": "nan",
+        "instrument_key": "GLOBAL_INDEX|^HSI"
+    },
+    "NIFTY100 ESG": {
+        "symbol": "NIFTY100 ESG",
+        "instrument_key": "NSE_INDEX|NIFTY100 ESG"
+    },
+    "Nifty FPI 150": {
+        "symbol": "NIFTYFPI",
+        "instrument_key": "NSE_INDEX|Nifty FPI 150"
+    },
+    "DOW JONES": {
+        "symbol": "nan",
+        "instrument_key": "GLOBAL_INDEX|^DJI"
+    },
+    "BSE REALTY": {
+        "symbol": "REALTY",
+        "instrument_key": "BSE_INDEX|REALTY"
+    },
+    "Nifty InfraLog": {
+        "symbol": "NIFTY INFRALOG",
+        "instrument_key": "NSE_INDEX|Nifty InfraLog"
+    },
+    "BSE SENSEX SIXTY": {
+        "symbol": "SNSX60",
+        "instrument_key": "BSE_INDEX|SNSX60"
+    },
+    "BSE 1000": {
+        "symbol": "BS1000",
+        "instrument_key": "BSE_INDEX|BS1000"
+    },
+    "Nifty REITs Realty": {
+        "symbol": "NIFTY REITS REALTY",
+        "instrument_key": "NSE_INDEX|Nifty REITs Realty"
+    },
+    "BSE Top 10 Banks": {
+        "symbol": "T10BNK",
+        "instrument_key": "BSE_INDEX|T10BNK"
+    },
+    "Nifty EV": {
+        "symbol": "NIFTY EV",
+        "instrument_key": "NSE_INDEX|Nifty EV"
+    },
+    "Nifty IT": {
+        "symbol": "NIFTY IT",
+        "instrument_key": "NSE_INDEX|Nifty IT"
+    },
+    "Nifty PSE": {
+        "symbol": "NIFTY PSE",
+        "instrument_key": "NSE_INDEX|Nifty PSE"
+    },
+    "FTSE 100": {
+        "symbol": "nan",
+        "instrument_key": "GLOBAL_INDEX|^FTSE"
+    },
+    "Nifty 50": {
+        "symbol": "NIFTY",
+        "instrument_key": "NSE_INDEX|Nifty 50"
+    },
+    "Nifty Next 50": {
+        "symbol": "NIFTYNXT50",
+        "instrument_key": "NSE_INDEX|Nifty Next 50"
+    },
+    "BSE INTERNET ECONOMY": {
+        "symbol": "INTECO",
+        "instrument_key": "BSE_INDEX|INTECO"
+    },
+    "Nifty IPO": {
+        "symbol": "NIFTY IPO",
+        "instrument_key": "NSE_INDEX|Nifty IPO"
+    },
+    "India VIX": {
+        "symbol": "INDIA VIX",
+        "instrument_key": "NSE_INDEX|India VIX"
+    },
+    "BSE INDIA MFG INDEX": {
+        "symbol": "MFG",
+        "instrument_key": "BSE_INDEX|MFG"
+    },
+    "Nifty MNC": {
+        "symbol": "NIFTY MNC",
+        "instrument_key": "NSE_INDEX|Nifty MNC"
+    },
+    "NIFTY IND DIGITAL": {
+        "symbol": "NIFTY IND DIGITAL",
+        "instrument_key": "NSE_INDEX|NIFTY IND DIGITAL"
+    },
+    "NIFTY MICROCAP250": {
+        "symbol": "NIFTY MICROCAP250",
+        "instrument_key": "NSE_INDEX|NIFTY MICROCAP250"
+    },
+    "Nifty Sml250 Q50": {
+        "symbol": "NIFTY SML250 Q50",
+        "instrument_key": "NSE_INDEX|Nifty Sml250 Q50"
+    },
+    "Nifty50 Value 20": {
+        "symbol": "NIFTY50 VALUE 20",
+        "instrument_key": "NSE_INDEX|Nifty50 Value 20"
+    },
+    "NiftyM150Momntm50": {
+        "symbol": "NIFTYM150MOMNTM50",
+        "instrument_key": "NSE_INDEX|NiftyM150Momntm50"
+    },
+    "BSE FOCUSED MIDCAP": {
+        "symbol": "FOCMID",
+        "instrument_key": "BSE_INDEX|FOCMID"
+    },
+    "Nifty500 LMS Eql": {
+        "symbol": "NIFTY500 LMS EQL",
+        "instrument_key": "NSE_INDEX|Nifty500 LMS Eql"
+    },
+    "Nifty500 Qlty50": {
+        "symbol": "NIFTY500 QLTY50",
+        "instrument_key": "NSE_INDEX|Nifty500 Qlty50"
+    },
+    "NIFTY INDIA MFG": {
+        "symbol": "NIFTY INDIA MFG",
+        "instrument_key": "NSE_INDEX|NIFTY INDIA MFG"
+    },
+    "Nifty500 Flexicap": {
+        "symbol": "NIFTY500 FLEXICAP",
+        "instrument_key": "NSE_INDEX|Nifty500 Flexicap"
+    },
+    "Nifty50 TR 2x Lev": {
+        "symbol": "NIFTY50 TR 2X LEV",
+        "instrument_key": "NSE_INDEX|Nifty50 TR 2x Lev"
+    },
+    "Nifty100ESGSecLdr": {
+        "symbol": "NIFTY100ESGSECLDR",
+        "instrument_key": "NSE_INDEX|Nifty100ESGSecLdr"
+    },
+    "S&P": {
+        "symbol": "nan",
+        "instrument_key": "GLOBAL_INDEX|^GSPC"
+    },
+    "GIFT NIFTY": {
+        "symbol": "nan",
+        "instrument_key": "GLOBAL_INDEX|SGX NIFTY"
+    },
+    "BSE Insurance": {
+        "symbol": "INSURE",
+        "instrument_key": "BSE_INDEX|INSURE"
+    },
+    "Nifty Smallcap 500": {
+        "symbol": "NIFTY SMALLCAP 500",
+        "instrument_key": "NSE_INDEX|Nifty Smallcap 500"
+    },
+    "Nifty Multi MQ 50": {
+        "symbol": "NIFTY MULTI MQ 50",
+        "instrument_key": "NSE_INDEX|Nifty Multi MQ 50"
+    },
+    "Nifty AQL 30": {
+        "symbol": "NIFTY AQL 30",
+        "instrument_key": "NSE_INDEX|Nifty AQL 30"
+    },
+    "Nifty500 LowVol50": {
+        "symbol": "NIFTY500 LOWVOL50",
+        "instrument_key": "NSE_INDEX|Nifty500 LowVol50"
+    },
+    "Nifty HighBeta 50": {
+        "symbol": "NIFTY HIGHBETA 50",
+        "instrument_key": "NSE_INDEX|Nifty HighBeta 50"
+    },
+    "BSE DVND STABILITY": {
+        "symbol": "BSEDSI",
+        "instrument_key": "BSE_INDEX|BSEDSI"
+    },
+    "BSE 500": {
+        "symbol": "BSE500",
+        "instrument_key": "BSE_INDEX|BSE500"
+    },
+    "Nifty200 Alpha 30": {
+        "symbol": "NIFTY200 ALPHA 30",
+        "instrument_key": "NSE_INDEX|Nifty200 Alpha 30"
+    },
+    "Nifty FinSrv25 50": {
+        "symbol": "NIFTY FINSRV25 50",
+        "instrument_key": "NSE_INDEX|Nifty FinSrv25 50"
+    },
+    "Nifty Pvt Bank": {
+        "symbol": "NIFTY PVT BANK",
+        "instrument_key": "NSE_INDEX|Nifty Pvt Bank"
+    },
+    "NIFTY CONSR DURBL": {
+        "symbol": "NIFTY CONSR DURBL",
+        "instrument_key": "NSE_INDEX|NIFTY CONSR DURBL"
+    },
+    "BSE MIDSML PB QLT TLT": {
+        "symbol": "BSMSPB",
+        "instrument_key": "BSE_INDEX|BSMSPB"
+    },
+    "Nifty New Consump": {
+        "symbol": "NIFTY NEW CONSUMP",
+        "instrument_key": "NSE_INDEX|Nifty New Consump"
+    },
+    "Nifty Ind Defence": {
+        "symbol": "NIFTY IND DEFENCE",
+        "instrument_key": "NSE_INDEX|Nifty Ind Defence"
+    },
+    "Nifty100 Liq 15": {
+        "symbol": "NIFTY100 LIQ 15",
+        "instrument_key": "NSE_INDEX|Nifty100 Liq 15"
+    },
+    "BSE 150 MIDCAP INDEX": {
+        "symbol": "MID150",
+        "instrument_key": "BSE_INDEX|MID150"
+    },
+    "BSE POWER & ENERGY": {
+        "symbol": "POWENE",
+        "instrument_key": "BSE_INDEX|POWENE"
+    },
+    "BSE 100": {
+        "symbol": "BSE100",
+        "instrument_key": "BSE_INDEX|BSE100"
+    },
+    "BSE 200": {
+        "symbol": "BSE200",
+        "instrument_key": "BSE_INDEX|BSE200"
+    },
+    "BSE FOCUSED IT": {
+        "symbol": "FOCIT",
+        "instrument_key": "BSE_INDEX|FOCIT"
+    },
+    "Nifty Low Vol 50": {
+        "symbol": "NIFTY LOW VOL 50",
+        "instrument_key": "NSE_INDEX|Nifty Low Vol 50"
+    },
+    "Nifty GS 8 13Yr": {
+        "symbol": "NIFTY GS 8 13YR",
+        "instrument_key": "NSE_INDEX|Nifty GS 8 13Yr"
+    },
+    "NIFTY OIL AND GAS": {
+        "symbol": "NIFTY OIL AND GAS",
+        "instrument_key": "NSE_INDEX|NIFTY OIL AND GAS"
+    },
+    "Nifty Top 10 EW": {
+        "symbol": "NIFTY TOP 10 EW",
+        "instrument_key": "NSE_INDEX|Nifty Top 10 EW"
+    },
+    "Nifty Capital Mkt": {
+        "symbol": "NIFTY CAPITAL MKT",
+        "instrument_key": "NSE_INDEX|Nifty Capital Mkt"
+    },
+    "Nifty Qlty LV 30": {
+        "symbol": "NIFTY QLTY LV 30",
+        "instrument_key": "NSE_INDEX|Nifty Qlty LV 30"
+    },
+    "BSE 200 EQUAL WEIGHT": {
+        "symbol": "200EQW",
+        "instrument_key": "BSE_INDEX|200EQW"
+    },
+    "Nifty Internet": {
+        "symbol": "NIFTY INTERNET",
+        "instrument_key": "NSE_INDEX|Nifty Internet"
+    },
+    "Nifty MidSmall 50 50": {
+        "symbol": "NIFTY MIDSMALL 50 50",
+        "instrument_key": "NSE_INDEX|Nifty MidSmall 50 50"
+    },
+    "Nifty Pharma": {
+        "symbol": "NIFTY PHARMA",
+        "instrument_key": "NSE_INDEX|Nifty Pharma"
+    },
+    "Nifty GS 10Yr Cln": {
+        "symbol": "NIFTY GS 10YR CLN",
+        "instrument_key": "NSE_INDEX|Nifty GS 10Yr Cln"
+    },
+    "Nifty AQLV 30": {
+        "symbol": "NIFTY AQLV 30",
+        "instrument_key": "NSE_INDEX|Nifty AQLV 30"
+    },
+    "BSE SENSEXSIXTY 65:35": {
+        "symbol": "SS6535",
+        "instrument_key": "BSE_INDEX|SS6535"
+    },
+    "NiftySml250MQ 100": {
+        "symbol": "NIFTYSML250MQ 100",
+        "instrument_key": "NSE_INDEX|NiftySml250MQ 100"
+    },
+    "Nifty SME Emerge": {
+        "symbol": "NIFTY SME EMERGE",
+        "instrument_key": "NSE_INDEX|Nifty SME Emerge"
+    },
+    "Nifty Cement": {
+        "symbol": "NIFTY CEMENT",
+        "instrument_key": "NSE_INDEX|Nifty Cement"
+    },
+    "NIFTY50 EQL Wgt": {
+        "symbol": "NIFTY50 EQL WGT",
+        "instrument_key": "NSE_INDEX|NIFTY50 EQL Wgt"
+    },
+    "BSE 100 ESG INDEX": {
+        "symbol": "ESG100",
+        "instrument_key": "BSE_INDEX|ESG100"
+    },
+    "Nifty Trans Logis": {
+        "symbol": "NIFTY TRANS LOGIS",
+        "instrument_key": "NSE_INDEX|Nifty Trans Logis"
+    },
+    "Nifty500 MQVLv50": {
+        "symbol": "NIFTY500 MQVLV50",
+        "instrument_key": "NSE_INDEX|Nifty500 MQVLv50"
+    },
+    "Nifty Commodities": {
+        "symbol": "NIFTY COMMODITIES",
+        "instrument_key": "NSE_INDEX|Nifty Commodities"
+    },
+    "Nifty50 PR 1x Inv": {
+        "symbol": "NIFTY50 PR 1X INV",
+        "instrument_key": "NSE_INDEX|Nifty50 PR 1x Inv"
+    },
+    "Nifty PSU Bank": {
+        "symbol": "NIFTY PSU BANK",
+        "instrument_key": "NSE_INDEX|Nifty PSU Bank"
+    },
+    "Nifty Waves": {
+        "symbol": "NIFTY WAVES",
+        "instrument_key": "NSE_INDEX|Nifty Waves"
+    },
+    "Nifty50 Div Point": {
+        "symbol": "NIFTY50 DIV POINT",
+        "instrument_key": "NSE_INDEX|Nifty50 Div Point"
+    },
+    "BSE INDUSTRIALS": {
+        "symbol": "INDSTR",
+        "instrument_key": "BSE_INDEX|INDSTR"
+    },
+    "NIFTY AlphaLowVol": {
+        "symbol": "NIFTY ALPHALOWVOL",
+        "instrument_key": "NSE_INDEX|NIFTY AlphaLowVol"
+    },
+    "NIFTY MIDSML 400": {
+        "symbol": "NIFTY MIDSML 400",
+        "instrument_key": "NSE_INDEX|NIFTY MIDSML 400"
+    },
+    "BSE 500 QUALITY 50": {
+        "symbol": "QUAL50",
+        "instrument_key": "BSE_INDEX|QUAL50"
+    },
+    "NIFTY SMLCAP 50": {
+        "symbol": "NIFTY SMLCAP 50",
+        "instrument_key": "NSE_INDEX|NIFTY SMLCAP 50"
+    },
+    "Nifty500 Health": {
+        "symbol": "NIFTY500 HEALTH",
+        "instrument_key": "NSE_INDEX|Nifty500 Health"
+    },
+    "Nifty Corp MAATR": {
+        "symbol": "NIFTY CORP MAATR",
+        "instrument_key": "NSE_INDEX|Nifty Corp MAATR"
+    },
+    "Nifty200Momentm30": {
+        "symbol": "NIFTY200MOMENTM30",
+        "instrument_key": "NSE_INDEX|Nifty200Momentm30"
+    },
+    "BSE PSU BANK": {
+        "symbol": "PSUBNK",
+        "instrument_key": "BSE_INDEX|PSUBNK"
+    },
+    "NIFTY TOTAL MKT": {
+        "symbol": "NIFTY TOTAL MKT",
+        "instrument_key": "NSE_INDEX|NIFTY TOTAL MKT"
+    },
+    "Nifty100 Enh ESG": {
+        "symbol": "NIFTY100 ENH ESG",
+        "instrument_key": "NSE_INDEX|Nifty100 Enh ESG"
+    },
+    "BSE BHARAT 22 INDEX": {
+        "symbol": "BHRT22",
+        "instrument_key": "BSE_INDEX|BHRT22"
+    },
+    "Nifty GrowSect 15": {
+        "symbol": "NIFTY GROWSECT 15",
+        "instrument_key": "NSE_INDEX|Nifty GrowSect 15"
+    },
+    "NIFTY200 QUALTY30": {
+        "symbol": "NIFTY200 QUALTY30",
+        "instrument_key": "NSE_INDEX|NIFTY200 QUALTY30"
+    },
+    "NIFTY LARGEMID250": {
+        "symbol": "NIFTY LARGEMID250",
+        "instrument_key": "NSE_INDEX|NIFTY LARGEMID250"
+    },
+    "Nifty Media": {
+        "symbol": "NIFTY MEDIA",
+        "instrument_key": "NSE_INDEX|Nifty Media"
+    },
+    "BSE POWER": {
+        "symbol": "POWER",
+        "instrument_key": "BSE_INDEX|POWER"
+    },
+    "BSE LgMd60:40St Div50": {
+        "symbol": "BLMD50",
+        "instrument_key": "BSE_INDEX|BLMD50"
+    },
+    "Nifty Housing": {
+        "symbol": "NIFTY HOUSING",
+        "instrument_key": "NSE_INDEX|Nifty Housing"
+    },
+    "Nifty50 Shariah": {
+        "symbol": "NIFTY50 SHARIAH",
+        "instrument_key": "NSE_INDEX|Nifty50 Shariah"
+    },
+    "Nifty CPSE": {
+        "symbol": "NIFTY CPSE",
+        "instrument_key": "NSE_INDEX|Nifty CPSE"
+    },
+    "BSE 500 Dvnd Leader50": {
+        "symbol": "DIVY50",
+        "instrument_key": "BSE_INDEX|DIVY50"
+    },
+    "Nifty Midcap 50": {
+        "symbol": "NIFTY MIDCAP 50",
+        "instrument_key": "NSE_INDEX|Nifty Midcap 50"
+    },
+    "Nifty500 Shariah": {
+        "symbol": "NIFTY500 SHARIAH",
+        "instrument_key": "NSE_INDEX|Nifty500 Shariah"
+    },
+    "BSE SENSEX NEXT 50": {
+        "symbol": "SNXT50",
+        "instrument_key": "BSE_INDEX|SNXT50"
+    },
+    "Nifty Auto": {
+        "symbol": "NIFTY AUTO",
+        "instrument_key": "NSE_INDEX|Nifty Auto"
+    },
+    "Nifty Shariah 25": {
+        "symbol": "NIFTY SHARIAH 25",
+        "instrument_key": "NSE_INDEX|Nifty Shariah 25"
+    },
+    "BSE 250 SMALLCAP": {
+        "symbol": "SML250",
+        "instrument_key": "BSE_INDEX|SML250"
+    },
+    "Nifty Multi Mfg": {
+        "symbol": "NIFTY MULTI MFG",
+        "instrument_key": "NSE_INDEX|Nifty Multi Mfg"
+    },
+    "Nifty Infra": {
+        "symbol": "NIFTY INFRA",
+        "instrument_key": "NSE_INDEX|Nifty Infra"
+    },
+    "BSE SENSEX NEXT 30": {
+        "symbol": "SNXN30",
+        "instrument_key": "BSE_INDEX|SNXN30"
+    },
+    "Nifty MidSml Hlth": {
+        "symbol": "NIFTY MIDSML HLTH",
+        "instrument_key": "NSE_INDEX|Nifty MidSml Hlth"
+    },
+    "Nifty MS Ind Cons": {
+        "symbol": "NIFTY MS IND CONS",
+        "instrument_key": "NSE_INDEX|Nifty MS Ind Cons"
+    },
+    "BSE 500 MOMENTUM 50": {
+        "symbol": "MOME50",
+        "instrument_key": "BSE_INDEX|MOME50"
+    },
+    "Nifty Bank": {
+        "symbol": "BANKNIFTY",
+        "instrument_key": "NSE_INDEX|Nifty Bank"
+    },
+    "BSE CONSUMER DISCRE": {
+        "symbol": "CONDIS",
+        "instrument_key": "BSE_INDEX|CONDIS"
+    },
+    "Nifty GS Compsite": {
+        "symbol": "NIFTY GS COMPSITE",
+        "instrument_key": "NSE_INDEX|Nifty GS Compsite"
+    },
+    "Nifty Mobility": {
+        "symbol": "NIFTY MOBILITY",
+        "instrument_key": "NSE_INDEX|Nifty Mobility"
+    },
+    "Nifty Div Opps 50": {
+        "symbol": "NIFTY DIV OPPS 50",
+        "instrument_key": "NSE_INDEX|Nifty Div Opps 50"
+    },
+    "BSE DIVERS FIN REV GR": {
+        "symbol": "DFRGRI",
+        "instrument_key": "BSE_INDEX|DFRGRI"
+    },
+    "Nifty200 Value 30": {
+        "symbol": "NIFTY200 VALUE 30",
+        "instrument_key": "NSE_INDEX|Nifty200 Value 30"
+    },
+    "BSE AUTO": {
+        "symbol": "AUTO",
+        "instrument_key": "BSE_INDEX|AUTO"
+    },
+    "Nifty Energy": {
+        "symbol": "NIFTY ENERGY",
+        "instrument_key": "NSE_INDEX|Nifty Energy"
+    },
+    "BSE CAP MKTS & INSU": {
+        "symbol": "CAPINS",
+        "instrument_key": "BSE_INDEX|CAPINS"
+    },
+    "BSE ENERGY": {
+        "symbol": "ENERGY",
+        "instrument_key": "BSE_INDEX|ENERGY"
+    },
+    "BSE Select IPO": {
+        "symbol": "SELIPO",
+        "instrument_key": "BSE_INDEX|SELIPO"
+    },
+    "Nifty NonCyc Cons": {
+        "symbol": "NIFTY NONCYC CONS",
+        "instrument_key": "NSE_INDEX|Nifty NonCyc Cons"
+    },
+    "NIFTY MID SELECT": {
+        "symbol": "MIDCPNIFTY",
+        "instrument_key": "NSE_INDEX|NIFTY MID SELECT"
+    },
+    "NiftyMS400 MQ 100": {
+        "symbol": "NIFTYMS400 MQ 100",
+        "instrument_key": "NSE_INDEX|NiftyMS400 MQ 100"
+    },
+    "Nifty Ind Tourism": {
+        "symbol": "NIFTY IND TOURISM",
+        "instrument_key": "NSE_INDEX|Nifty Ind Tourism"
+    },
+    "BSE PRIVATE BANKS": {
+        "symbol": "BSEPBI",
+        "instrument_key": "BSE_INDEX|BSEPBI"
+    },
+    "BSE 400 MIDSMALLCAP": {
+        "symbol": "MSL400",
+        "instrument_key": "BSE_INDEX|MSL400"
+    },
+    "BSE PSU": {
+        "symbol": "BSEPSU",
+        "instrument_key": "BSE_INDEX|BSEPSU"
+    },
+    "BSE QUALITY INDEX": {
+        "symbol": "BSEQUI",
+        "instrument_key": "BSE_INDEX|BSEQUI"
+    },
+    "Nifty500Momentm50": {
+        "symbol": "NIFTY500MOMENTM50",
+        "instrument_key": "NSE_INDEX|Nifty500Momentm50"
+    },
+    "BSE MIDCAP SELECT": {
+        "symbol": "MIDSEL",
+        "instrument_key": "BSE_INDEX|MIDSEL"
+    },
+    "NiftyConglomerate": {
+        "symbol": "NIFTYCONGLOMERATE",
+        "instrument_key": "NSE_INDEX|NiftyConglomerate"
+    },
+    "BSE Services": {
+        "symbol": "BSESER",
+        "instrument_key": "BSE_INDEX|BSESER"
+    },
+    "DAX": {
+        "symbol": "nan",
+        "instrument_key": "GLOBAL_INDEX|^GDAXI"
+    },
+    "BSE Total Mkt Index": {
+        "symbol": "BSETMI",
+        "instrument_key": "BSE_INDEX|BSETMI"
+    },
+    "BHARATBOND-APR31": {
+        "symbol": "BHARATBOND-APR31",
+        "instrument_key": "NSE_INDEX|BHARATBOND-APR31"
+    },
+    "BHARATBOND-APR32": {
+        "symbol": "BHARATBOND-APR32",
+        "instrument_key": "NSE_INDEX|BHARATBOND-APR32"
+    },
+    "BHARATBOND-APR30": {
+        "symbol": "BHARATBOND-APR30",
+        "instrument_key": "NSE_INDEX|BHARATBOND-APR30"
+    },
+    "BHARATBOND-APR33": {
+        "symbol": "BHARATBOND-APR33",
+        "instrument_key": "NSE_INDEX|BHARATBOND-APR33"
+    },
+    "BSE ENHANCED VALUE": {
+        "symbol": "BSEEVI",
+        "instrument_key": "BSE_INDEX|BSEEVI"
+    },
+    "Nifty Fin Service": {
+        "symbol": "FINNIFTY",
+        "instrument_key": "NSE_INDEX|Nifty Fin Service"
+    },
+    "BSE FMCG": {
+        "symbol": "BSEFMC",
+        "instrument_key": "BSE_INDEX|BSEFMC"
+    },
+    "Nifty Metal": {
+        "symbol": "NIFTY METAL",
+        "instrument_key": "NSE_INDEX|Nifty Metal"
+    },
+    "BSE REIT COMM REALEST": {
+        "symbol": "BRACRE",
+        "instrument_key": "BSE_INDEX|BRACRE"
+    },
+    "BSE IPO": {
+        "symbol": "BSEIPO",
+        "instrument_key": "BSE_INDEX|BSEIPO"
+    },
+    "Nifty500 EW": {
+        "symbol": "NIFTY500 EW",
+        "instrument_key": "NSE_INDEX|Nifty500 EW"
+    },
+    "Nifty50 PR 2x Lev": {
+        "symbol": "NIFTY50 PR 2X LEV",
+        "instrument_key": "NSE_INDEX|Nifty50 PR 2x Lev"
+    },
+    "BSE COMMODITIES": {
+        "symbol": "COMDTY",
+        "instrument_key": "BSE_INDEX|COMDTY"
+    },
+    "BSE LOW VOLATILITY": {
+        "symbol": "BSELVI",
+        "instrument_key": "BSE_INDEX|BSELVI"
+    },
+    "BSE MidSmall Pvt Bnks": {
+        "symbol": "BSEMSP",
+        "instrument_key": "BSE_INDEX|BSEMSP"
+    },
+    "BSE MOMENTUM INDEX": {
+        "symbol": "BSEMOI",
+        "instrument_key": "BSE_INDEX|BSEMOI"
+    },
+    "NIFTY MIDCAP 100": {
+        "symbol": "NIFTY MIDCAP 100",
+        "instrument_key": "NSE_INDEX|NIFTY MIDCAP 100"
+    },
+    "BSE INDIA SECT LEADER": {
+        "symbol": "INSLDR",
+        "instrument_key": "BSE_INDEX|INSLDR"
+    },
+    "NIFTY MIDCAP 150": {
+        "symbol": "NIFTY MIDCAP 150",
+        "instrument_key": "NSE_INDEX|NIFTY MIDCAP 150"
+    },
+    "Nifty 100": {
+        "symbol": "NIFTY 100",
+        "instrument_key": "NSE_INDEX|Nifty 100"
+    },
+    "NIFTY100 LowVol30": {
+        "symbol": "NIFTY100 LOWVOL30",
+        "instrument_key": "NSE_INDEX|NIFTY100 LowVol30"
+    },
+    "Nifty 200": {
+        "symbol": "NIFTY 200",
+        "instrument_key": "NSE_INDEX|Nifty 200"
+    },
+    "Nifty Mid Liq 15": {
+        "symbol": "NIFTY MID LIQ 15",
+        "instrument_key": "NSE_INDEX|Nifty Mid Liq 15"
+    },
+    "BSE SME IPO": {
+        "symbol": "SMEIPO",
+        "instrument_key": "BSE_INDEX|SMEIPO"
+    },
+    "Nifty 500": {
+        "symbol": "NIFTY 500",
+        "instrument_key": "NSE_INDEX|Nifty 500"
+    },
+    "BSE 100 LARGECAP TMC": {
+        "symbol": "LCTMCI",
+        "instrument_key": "BSE_INDEX|LCTMCI"
+    },
+    "Nifty Chemicals": {
+        "symbol": "NIFTY CHEMICALS",
+        "instrument_key": "NSE_INDEX|Nifty Chemicals"
+    },
+    "Nifty Multi Infra": {
+        "symbol": "NIFTY MULTI INFRA",
+        "instrument_key": "NSE_INDEX|Nifty Multi Infra"
+    },
+    "Nifty GS 15YrPlus": {
+        "symbol": "NIFTY GS 15YRPLUS",
+        "instrument_key": "NSE_INDEX|Nifty GS 15YrPlus"
+    },
+    "US Tech 100": {
+        "symbol": "nan",
+        "instrument_key": "GLOBAL_INDEX|IXIX"
+    },
+    "Nifty FinSerExBnk": {
+        "symbol": "NIFTY FINSEREXBNK",
+        "instrument_key": "NSE_INDEX|Nifty FinSerExBnk"
+    },
+    "BSE METAL": {
+        "symbol": "METAL",
+        "instrument_key": "BSE_INDEX|METAL"
+    },
+    "BSE TECK": {
+        "symbol": "TECK",
+        "instrument_key": "BSE_INDEX|TECK"
+    },
+    "BSE PREMIUM CONSUMPT": {
+        "symbol": "PRECON",
+        "instrument_key": "BSE_INDEX|PRECON"
+    },
+    "BSE CPSE": {
+        "symbol": "CPSE",
+        "instrument_key": "BSE_INDEX|CPSE"
+    },
+    "Nifty Serv Sector": {
+        "symbol": "NIFTY SERV SECTOR",
+        "instrument_key": "NSE_INDEX|Nifty Serv Sector"
+    },
+    "Nifty100 Alpha 30": {
+        "symbol": "NIFTY100 ALPHA 30",
+        "instrument_key": "NSE_INDEX|Nifty100 Alpha 30"
+    },
+    "Nifty Top 20 EW": {
+        "symbol": "NIFTY TOP 20 EW",
+        "instrument_key": "NSE_INDEX|Nifty Top 20 EW"
+    },
+    "CAC 40": {
+        "symbol": "nan",
+        "instrument_key": "GLOBAL_INDEX|^FCHI"
+    },
+    "Nifty500 Value 50": {
+        "symbol": "NIFTY500 VALUE 50",
+        "instrument_key": "NSE_INDEX|Nifty500 Value 50"
+    },
+    "Nifty GS 10Yr": {
+        "symbol": "NIFTY GS 10YR",
+        "instrument_key": "NSE_INDEX|Nifty GS 10Yr"
+    },
+    "BSE Hospitals": {
+        "symbol": "BSHOSP",
+        "instrument_key": "BSE_INDEX|BSHOSP"
+    },
+    "Nifty50 USD": {
+        "symbol": "NIFTY50 USD",
+        "instrument_key": "NSE_INDEX|Nifty50 USD"
+    },
+    "Nifty Tata 25 Cap": {
+        "symbol": "NIFTY TATA 25 CAP",
+        "instrument_key": "NSE_INDEX|Nifty Tata 25 Cap"
+    },
+    "NIFTY SMLCAP 100": {
+        "symbol": "NIFTY SMLCAP 100",
+        "instrument_key": "NSE_INDEX|NIFTY SMLCAP 100"
+    },
+    "BSE 250 LARGEMIDCAP": {
+        "symbol": "LMI250",
+        "instrument_key": "BSE_INDEX|LMI250"
+    },
+    "BSE Housing Finance": {
+        "symbol": "BSHFIN",
+        "instrument_key": "BSE_INDEX|BSHFIN"
+    },
+    "BSE SEL BUSINESS GRP": {
+        "symbol": "BBGEFS",
+        "instrument_key": "BSE_INDEX|BBGEFS"
+    },
+    "NIFTY SMLCAP 250": {
+        "symbol": "NIFTY SMLCAP 250",
+        "instrument_key": "NSE_INDEX|NIFTY SMLCAP 250"
+    },
+    "Nifty TMMQ 50": {
+        "symbol": "NIFTY TMMQ 50",
+        "instrument_key": "NSE_INDEX|Nifty TMMQ 50"
+    },
+    "US 30": {
+        "symbol": "nan",
+        "instrument_key": "GLOBAL_INDEX|DOW FUTURES"
+    },
+    "Nifty FMCG": {
+        "symbol": "NIFTY FMCG",
+        "instrument_key": "NSE_INDEX|Nifty FMCG"
+    },
+    "BSE SENSEX": {
+        "symbol": "SENSEX",
+        "instrument_key": "BSE_INDEX|SENSEX"
+    },
+    "BSE MCAP150MOMENTUM30": {
+        "symbol": "MMOM30",
+        "instrument_key": "BSE_INDEX|MMOM30"
+    },
+    "BSE UTILITIES": {
+        "symbol": "UTILS",
+        "instrument_key": "BSE_INDEX|UTILS"
+    },
+    "Nifty MS Fin Serv": {
+        "symbol": "NIFTY MS FIN SERV",
+        "instrument_key": "NSE_INDEX|Nifty MS Fin Serv"
+    },
+    "Nifty Top 15 EW": {
+        "symbol": "NIFTY TOP 15 EW",
+        "instrument_key": "NSE_INDEX|Nifty Top 15 EW"
+    },
+    "NIFTY500 MULTICAP": {
+        "symbol": "NIFTY500 MULTICAP",
+        "instrument_key": "NSE_INDEX|NIFTY500 MULTICAP"
+    },
+    "NIKKEI 225": {
+        "symbol": "nan",
+        "instrument_key": "GLOBAL_INDEX|^N225"
+    },
+    "NIFTY HEALTHCARE": {
+        "symbol": "NIFTY HEALTHCARE",
+        "instrument_key": "NSE_INDEX|NIFTY HEALTHCARE"
+    },
+    "Nifty GS 4 8Yr": {
+        "symbol": "NIFTY GS 4 8YR",
+        "instrument_key": "NSE_INDEX|Nifty GS 4 8Yr"
+    },
+    "NIFTY M150 QLTY50": {
+        "symbol": "NIFTY M150 QLTY50",
+        "instrument_key": "NSE_INDEX|NIFTY M150 QLTY50"
+    },
+    "BSE INDIA INFRA INDEX": {
+        "symbol": "INFRA",
+        "instrument_key": "BSE_INDEX|INFRA"
+    },
+    "NIFTY100 EQL Wgt": {
+        "symbol": "NIFTY100 EQL WGT",
+        "instrument_key": "NSE_INDEX|NIFTY100 EQL Wgt"
+    },
+    "BSE OIL&GAS": {
+        "symbol": "OILGAS",
+        "instrument_key": "BSE_INDEX|OILGAS"
+    },
+    "BSE SMALLCAP SELECT": {
+        "symbol": "SMLSEL",
+        "instrument_key": "BSE_INDEX|SMLSEL"
+    },
+    "Nifty MS IT Telcm": {
+        "symbol": "NIFTY MS IT TELCM",
+        "instrument_key": "NSE_INDEX|Nifty MS IT Telcm"
+    },
+    "BSE SENSEX EQUAL WGT": {
+        "symbol": "SENEQW",
+        "instrument_key": "BSE_INDEX|SENEQW"
+    },
+    "Nifty GS 11 15Yr": {
+        "symbol": "NIFTY GS 11 15YR",
+        "instrument_key": "NSE_INDEX|Nifty GS 11 15Yr"
+    },
+    "BSE Healthcare": {
+        "symbol": "BSEHC",
+        "instrument_key": "BSE_INDEX|BSEHC"
+    },
+    "BSE IT": {
+        "symbol": "BSEIT",
+        "instrument_key": "BSE_INDEX|BSEIT"
+    },
+    "BSE CAPITAL GOODS": {
+        "symbol": "BSECG",
+        "instrument_key": "BSE_INDEX|BSECG"
+    },
+    "BSE CONSUMER DURABLES": {
+        "symbol": "BSECD",
+        "instrument_key": "BSE_INDEX|BSECD"
+    },
+    "Nifty50 TR 1x Inv": {
+        "symbol": "NIFTY50 TR 1X INV",
+        "instrument_key": "NSE_INDEX|Nifty50 TR 1x Inv"
+    },
+    "BSE TELECOMMUNICATION": {
+        "symbol": "TELCOM",
+        "instrument_key": "BSE_INDEX|TELCOM"
+    },
+    "NIFTY Alpha 50": {
+        "symbol": "NIFTY ALPHA 50",
+        "instrument_key": "NSE_INDEX|NIFTY Alpha 50"
+    },
+    "BSE SENSEX 50": {
+        "symbol": "SENSEX50",
+        "instrument_key": "BSE_INDEX|SENSEX50"
+    }
+}
