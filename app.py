@@ -7,16 +7,12 @@ import io
 import gzip
 import json
 import time
-from datetime import date, timedelta, datetime
+from datetime import date, timedelta
 import gspread
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import Flow
-import extra_streamlit_components as stx
 
 st.set_page_config(page_title="Indian Stock Market Master Indices OHLC", layout="wide")
-
-# Initialize Cookie Manager
-cookie_manager = stx.CookieManager()
 
 JSON_FILE = "upstox_all_indices.json"
 CLIENT_SECRET_FILE = "client_secret.json"
@@ -103,7 +99,7 @@ INDEX_ITEMS = {
     for d, m in INDICES_DATA.items()
 }
 
-# 3. OAuth Flow Helpers
+# 3. OAuth Flow Helpers & Persistent Session Handler
 def get_redirect_uri():
     if "RENDER_EXTERNAL_URL" in os.environ and os.environ["RENDER_EXTERNAL_URL"].strip():
         base_url = os.environ["RENDER_EXTERNAL_URL"].strip().rstrip("/")
@@ -126,51 +122,56 @@ def get_oauth_flow():
         return None
     return Flow.from_client_config(cfg, scopes=SCOPES, redirect_uri=get_redirect_uri())
 
-# Session and Persistent Cookie Hydration
-user_token_json = cookie_manager.get(cookie="user_oauth_credentials")
-
+# Initialize session state container
 if "user_credentials" not in st.session_state:
-    if user_token_json:
-        try:
-            st.session_state["user_credentials"] = json.loads(user_token_json)
-        except Exception:
-            st.session_state["user_credentials"] = None
-    else:
-        st.session_state["user_credentials"] = None
+    st.session_state["user_credentials"] = None
 
-# Single-execution protected OAuth Callback Handler
-query_params = st.query_params
-if "code" in query_params:
-    auth_code = query_params["code"]
-    if st.session_state.get("last_processed_code") != auth_code and not st.session_state.get("user_credentials"):
-        st.session_state["last_processed_code"] = auth_code
-        flow = get_oauth_flow()
-        if flow:
-            try:
-                flow.fetch_token(code=auth_code)
-                creds = flow.credentials
-                creds_data = {
-                    "token": creds.token,
-                    "refresh_token": creds.refresh_token,
-                    "token_uri": creds.token_uri,
-                    "client_id": creds.client_id,
-                    "client_secret": creds.client_secret,
-                    "scopes": creds.scopes
-                }
-                st.session_state["user_credentials"] = creds_data
-                cookie_manager.set(
-                    "user_oauth_credentials",
-                    json.dumps(creds_data),
-                    expires_at=datetime.now() + timedelta(days=1)
-                )
-                st.query_params.clear()
+# Hydrate credentials from persistent query parameters
+if not st.session_state["user_credentials"] and "session_token" in st.query_params:
+    saved_refresh_token = st.query_params["session_token"]
+    cfg = get_client_config()
+    if cfg:
+        web_cfg = cfg.get("web", cfg.get("installed", {}))
+        st.session_state["user_credentials"] = {
+            "token": None,
+            "refresh_token": saved_refresh_token,
+            "token_uri": "https://oauth2.googleapis.com/token",
+            "client_id": web_cfg.get("client_id"),
+            "client_secret": web_cfg.get("client_secret"),
+            "scopes": SCOPES
+        }
+
+# Process Google OAuth Callback
+if "code" in st.query_params and not st.session_state["user_credentials"]:
+    auth_code = st.query_params["code"]
+    flow = get_oauth_flow()
+    if flow:
+        try:
+            flow.fetch_token(code=auth_code)
+            creds = flow.credentials
+            creds_data = {
+                "token": creds.token,
+                "refresh_token": creds.refresh_token,
+                "token_uri": creds.token_uri,
+                "client_id": creds.client_id,
+                "client_secret": creds.client_secret,
+                "scopes": creds.scopes
+            }
+            st.session_state["user_credentials"] = creds_data
+            
+            # Persist session directly in URL query param so refresh / tab reopen keeps session
+            if creds.refresh_token:
+                st.query_params["session_token"] = creds.refresh_token
+            
+            del st.query_params["code"]
+            st.rerun()
+        except Exception as e:
+            if "code" in st.query_params:
+                del st.query_params["code"]
+            if "invalid_grant" not in str(e).lower():
+                st.error(f"Authentication error: {e}")
+            else:
                 st.rerun()
-            except Exception as e:
-                st.query_params.clear()
-                if "invalid_grant" not in str(e).lower():
-                    st.error(f"Authentication exchange error: {e}")
-                else:
-                    st.rerun()
 
 # 4. Sidebar Controls
 with st.sidebar:
@@ -195,11 +196,11 @@ with st.sidebar:
     st.divider()
     st.header("2. Google Account Link")
     if st.session_state.get("user_credentials"):
-        st.success("Connected to your Personal Google Account (Session active for 24h)")
+        st.success("✅ Connected to your Personal Google Account")
         if st.button("🚪 Logout Google Account"):
-            cookie_manager.delete("user_oauth_credentials")
             st.session_state["user_credentials"] = None
-            st.session_state["last_processed_code"] = None
+            if "session_token" in st.query_params:
+                del st.query_params["session_token"]
             st.rerun()
     else:
         st.info("Log in with Google to push sheets directly to YOUR Drive.")
@@ -238,7 +239,7 @@ def fetch_from_upstox(instrument_key, s_date, e_date):
         pass
     return pd.DataFrame()
 
-# 6. True Trading-Week Resampling (Handles Monday/Friday Market Holidays)
+# 6. True Trading-Week Resampling (Accounts for Monday & Friday Market Holidays)
 def convert_to_weekly(daily_df):
     temp = daily_df.copy()
     temp["Date"] = pd.to_datetime(temp["Date"])
