@@ -8,19 +8,10 @@ import gzip
 import json
 import time
 from datetime import date, timedelta
-import gspread
-from google.oauth2.credentials import Credentials
-from google_auth_oauthlib.flow import Flow
 
 st.set_page_config(page_title="Indian Stock Market Master Indices OHLC", layout="wide")
 
 JSON_FILE = "upstox_all_indices.json"
-CLIENT_SECRET_FILE = "client_secret.json"
-
-SCOPES = [
-    "https://www.googleapis.com/auth/spreadsheets",
-    "https://www.googleapis.com/auth/drive.file"
-]
 
 # 1. Master Indices Cache / Auto-Updater Engine
 def download_and_save_master_indices():
@@ -99,81 +90,7 @@ INDEX_ITEMS = {
     for d, m in INDICES_DATA.items()
 }
 
-# 3. OAuth Flow Helpers & Persistent Session Handler
-def get_redirect_uri():
-    if "RENDER_EXTERNAL_URL" in os.environ and os.environ["RENDER_EXTERNAL_URL"].strip():
-        base_url = os.environ["RENDER_EXTERNAL_URL"].strip().rstrip("/")
-        if not base_url.startswith("http"):
-            base_url = f"https://{base_url}"
-        return base_url
-    return "http://localhost:8501"
-
-def get_client_config():
-    if "GOOGLE_OAUTH_CLIENT_CONFIG" in os.environ and os.environ["GOOGLE_OAUTH_CLIENT_CONFIG"].strip():
-        return json.loads(os.environ["GOOGLE_OAUTH_CLIENT_CONFIG"])
-    if os.path.exists(CLIENT_SECRET_FILE):
-        with open(CLIENT_SECRET_FILE, "r") as f:
-            return json.load(f)
-    return None
-
-def get_oauth_flow():
-    cfg = get_client_config()
-    if not cfg:
-        return None
-    return Flow.from_client_config(cfg, scopes=SCOPES, redirect_uri=get_redirect_uri())
-
-# Initialize session state container
-if "user_credentials" not in st.session_state:
-    st.session_state["user_credentials"] = None
-
-# Hydrate credentials from persistent query parameters
-if not st.session_state["user_credentials"] and "session_token" in st.query_params:
-    saved_refresh_token = st.query_params["session_token"]
-    cfg = get_client_config()
-    if cfg:
-        web_cfg = cfg.get("web", cfg.get("installed", {}))
-        st.session_state["user_credentials"] = {
-            "token": None,
-            "refresh_token": saved_refresh_token,
-            "token_uri": "https://oauth2.googleapis.com/token",
-            "client_id": web_cfg.get("client_id"),
-            "client_secret": web_cfg.get("client_secret"),
-            "scopes": SCOPES
-        }
-
-# Process Google OAuth Callback
-if "code" in st.query_params and not st.session_state["user_credentials"]:
-    auth_code = st.query_params["code"]
-    flow = get_oauth_flow()
-    if flow:
-        try:
-            flow.fetch_token(code=auth_code)
-            creds = flow.credentials
-            creds_data = {
-                "token": creds.token,
-                "refresh_token": creds.refresh_token,
-                "token_uri": creds.token_uri,
-                "client_id": creds.client_id,
-                "client_secret": creds.client_secret,
-                "scopes": creds.scopes
-            }
-            st.session_state["user_credentials"] = creds_data
-            
-            # Persist session directly in URL query param so refresh / tab reopen keeps session
-            if creds.refresh_token:
-                st.query_params["session_token"] = creds.refresh_token
-            
-            del st.query_params["code"]
-            st.rerun()
-        except Exception as e:
-            if "code" in st.query_params:
-                del st.query_params["code"]
-            if "invalid_grant" not in str(e).lower():
-                st.error(f"Authentication error: {e}")
-            else:
-                st.rerun()
-
-# 4. Sidebar Controls
+# 3. Sidebar Controls
 with st.sidebar:
     st.header("1. Parameters")
     all_cats = ["All Categories", "Sectoral", "Broad Market", "Thematic", "Strategy"]
@@ -194,32 +111,14 @@ with st.sidebar:
     fetch_btn = st.button("Fetch Data", type="primary")
 
     st.divider()
-    st.header("2. Google Account Link")
-    if st.session_state.get("user_credentials"):
-        st.success("✅ Connected to your Personal Google Account")
-        if st.button("🚪 Logout Google Account"):
-            st.session_state["user_credentials"] = None
-            if "session_token" in st.query_params:
-                del st.query_params["session_token"]
-            st.rerun()
-    else:
-        st.info("Log in with Google to push sheets directly to YOUR Drive.")
-        flow = get_oauth_flow()
-        if flow:
-            auth_url, _ = flow.authorization_url(prompt='consent', access_type='offline')
-            st.markdown(
-                f'<a href="{auth_url}" target="_self"><button style="background-color:#4285F4;color:white;padding:8px 16px;border:none;border-radius:4px;cursor:pointer;width:100%;">🔑 Sign In with Google</button></a>',
-                unsafe_allow_html=True
-            )
-        else:
-            st.warning("OAuth client secret missing.")
+    st.header("2. Master Registry Sync")
+    if st.button("🔄 Sync Master Indices Now"):
+        st.cache_data.clear()
+        load_all_indices(force_refresh=True)
+        st.success("Master indices successfully refreshed from Upstox!")
+        st.rerun()
 
-    st.divider()
-    st.header("3. Google Sheets Configuration")
-    sheet_identifier = st.text_input("Spreadsheet Name or URL", value="NSE_Indices_Data")
-    worksheet_name = st.text_input("Worksheet Tab Name", value=f"{selected_index[:20]}_{timeframe}")
-
-# 5. Upstox Historical Data Fetcher (URL Encoded)
+# 4. Upstox Historical Data Fetcher (URL Encoded)
 def fetch_from_upstox(instrument_key, s_date, e_date):
     encoded_key = urllib.parse.quote(instrument_key)
     url = f"https://api.upstox.com/v2/historical-candle/{encoded_key}/day/{e_date.strftime('%Y-%m-%d')}/{s_date.strftime('%Y-%m-%d')}"
@@ -239,7 +138,7 @@ def fetch_from_upstox(instrument_key, s_date, e_date):
         pass
     return pd.DataFrame()
 
-# 6. True Trading-Week Resampling (Accounts for Monday & Friday Market Holidays)
+# 5. True Trading-Week Resampling (Handles Monday/Friday Market Holidays)
 def convert_to_weekly(daily_df):
     temp = daily_df.copy()
     temp["Date"] = pd.to_datetime(temp["Date"])
@@ -258,42 +157,9 @@ def convert_to_weekly(daily_df):
             })
     return pd.DataFrame(records).sort_values(by="Date", ascending=True).reset_index(drop=True)
 
-# 7. Push to User's Personal Google Sheet
-def push_to_user_google_sheet(dataframe, sheet_target, ws_title, creds_dict):
-    try:
-        creds = Credentials(
-            token=creds_dict["token"],
-            refresh_token=creds_dict.get("refresh_token"),
-            token_uri=creds_dict.get("token_uri", "https://oauth2.googleapis.com/token"),
-            client_id=creds_dict.get("client_id"),
-            client_secret=creds_dict.get("client_secret"),
-            scopes=creds_dict.get("scopes", SCOPES)
-        )
-        gc = gspread.authorize(creds)
-        target = sheet_target.strip()
-        try:
-            sh = gc.open_by_url(target) if target.startswith("https://") else gc.open(target)
-        except gspread.SpreadsheetNotFound:
-            sh = gc.create(target)
-
-        safe_tab = "".join([c for c in ws_title if c.isalnum() or c in " _-"])[:30]
-        try:
-            ws = sh.worksheet(safe_tab)
-        except gspread.WorksheetNotFound:
-            ws = sh.add_worksheet(title=safe_tab, rows=str(len(dataframe) + 50), cols="10")
-
-        ws.clear()
-        clean_df = dataframe.copy()
-        clean_df["Date"] = clean_df["Date"].astype(str)
-        data_to_write = [clean_df.columns.values.tolist()] + clean_df.values.tolist()
-        ws.update(range_name='A1', values=data_to_write)
-        return True, sh.url
-    except Exception as e:
-        return False, str(e)
-
-# 8. Main Application Interface
+# 6. Main Application Interface
 st.title("📈 Indian Stock Market Master Indices OHLC Explorer")
-st.caption("Inspect verified daily and weekly OHLC market data across all NSE & BSE indices and export directly to your personal Google Sheets.")
+st.caption("Inspect verified daily and weekly OHLC market data across all NSE & BSE indices and download clean CSV reports.")
 
 if (fetch_btn or selected_index) and INDEX_ITEMS:
     if start_date > end_date:
@@ -322,33 +188,27 @@ if (fetch_btn or selected_index) and INDEX_ITEMS:
             c4.metric("Instrument Key", selected_meta["key"])
 
             st.divider()
+            
+            # Chart View
             chart_df = display_df.sort_values(by="Date").set_index("Date")
+            st.subheader(f"{selected_index} ({timeframe}) Price Trend")
             st.line_chart(chart_df["Close"])
+
+            # Data Table View
+            st.subheader(f"{timeframe} OHLC Data Table")
             st.dataframe(display_df, use_container_width=True)
 
+            # Clean Download Action
             st.divider()
-            col_a, col_b = st.columns(2)
-            with col_a:
-                st.markdown("#### ⚡ Push to YOUR Google Sheets")
-                if st.button("🚀 Push to Personal Google Sheet", type="primary"):
-                    if not st.session_state.get("user_credentials"):
-                        st.error("Please login with Google in the sidebar first!")
-                    else:
-                        with st.spinner("Writing data directly to your personal Google Drive..."):
-                            success, result = push_to_user_google_sheet(
-                                display_df, sheet_identifier, worksheet_name, st.session_state["user_credentials"]
-                            )
-                            if success:
-                                st.success(f"Successfully pushed! [Open Your Google Sheet]({result})")
-                            else:
-                                st.error(f"Sync Error: {result}")
-
-            with col_b:
-                st.markdown("#### 📁 Local CSV Export")
-                csv_data = display_df.to_csv(index=False).encode('utf-8')
-                st.download_button(
-                    label=f"📥 Download {timeframe} CSV",
-                    data=csv_data,
-                    file_name=f"{selected_index}_{timeframe}.csv",
-                    mime="text/csv"
-                )
+            clean_filename = "".join([c for c in selected_index if c.isalnum() or c in " _-"]).replace(" ", "_")
+            filename = f"{clean_filename}_{timeframe}_{start_date}_to_{end_date}.csv"
+            csv_data = display_df.to_csv(index=False).encode('utf-8')
+            
+            st.download_button(
+                label=f"📥 Download {selected_index} ({timeframe}) CSV",
+                data=csv_data,
+                file_name=filename,
+                mime="text/csv",
+                type="primary",
+                use_container_width=True
+            )
