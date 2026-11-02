@@ -15,7 +15,7 @@ import extra_streamlit_components as stx
 
 st.set_page_config(page_title="Indian Stock Market Master Indices OHLC", layout="wide")
 
-# Cookie Manager Setup
+# Initialize Cookie Manager
 cookie_manager = stx.CookieManager()
 
 JSON_FILE = "upstox_all_indices.json"
@@ -26,16 +26,18 @@ SCOPES = [
     "https://www.googleapis.com/auth/drive.file"
 ]
 
-# 1. Master Indices Cache / Auto-Updater
+# 1. Master Indices Cache / Auto-Updater Engine
 def download_and_save_master_indices():
+    """Downloads official Upstox complete master instruments and saves indexed tokens."""
     url = "https://assets.upstox.com/market-quote/instruments/exchange/complete.csv.gz"
     res = requests.get(url, timeout=40)
     with gzip.open(io.BytesIO(res.content)) as f:
         df = pd.read_csv(f)
+        
     df.columns = [c.strip().lower() for c in df.columns]
     key_col = 'instrument_key' if 'instrument_key' in df.columns else 'key'
     name_col = 'name' if 'name' in df.columns else df.columns[0]
-    symbol_col = 'tradingsymbol' if 'tradingsymbol' in df.columns else 'symbol'
+    symbol_col = 'tradingsymbol' if 'tradingsymbol' in df.columns else ('symbol' if 'symbol' in df.columns else df.columns[0])
 
     mask = pd.Series(False, index=df.index)
     for col in df.columns:
@@ -43,6 +45,10 @@ def download_and_save_master_indices():
             mask = mask | df[col].astype(str).str.contains('INDEX', case=False, na=False)
 
     indices_df = df[mask].copy()
+    if key_col in df.columns:
+        mask_key = df[key_col].astype(str).str.contains('_INDEX', case=False, na=False)
+        indices_df = pd.concat([indices_df, df[mask_key]]).drop_duplicates()
+
     indices_catalog = {}
     for _, row in indices_df.iterrows():
         raw_name = str(row.get(name_col) or '').strip()
@@ -58,7 +64,15 @@ def download_and_save_master_indices():
 
 @st.cache_data
 def load_all_indices(force_refresh=False):
-    if force_refresh or not os.path.exists(JSON_FILE) or (time.time() - os.path.getmtime(JSON_FILE) > 86400):
+    """Loads indices from cache or downloads fresh file if older than 24 hours."""
+    needs_download = False
+    if force_refresh or not os.path.exists(JSON_FILE):
+        needs_download = True
+    else:
+        if time.time() - os.path.getmtime(JSON_FILE) > 86400:
+            needs_download = True
+
+    if needs_download:
         try:
             return download_and_save_master_indices()
         except Exception:
@@ -66,6 +80,7 @@ def load_all_indices(force_refresh=False):
                 with open(JSON_FILE, "r", encoding="utf-8") as f:
                     return json.load(f)
             return {}
+
     with open(JSON_FILE, "r", encoding="utf-8") as f:
         return json.load(f)
 
@@ -88,15 +103,17 @@ INDEX_ITEMS = {
     for d, m in INDICES_DATA.items()
 }
 
-# 3. OAuth Flow Helpers (with 24h Persistent Cookie)
+# 3. OAuth Flow Helpers
 def get_redirect_uri():
-    # Production Render URL ya local URL
-    if "RENDER_EXTERNAL_URL" in os.environ:
-        return os.environ["RENDER_EXTERNAL_URL"].rstrip("/")
+    if "RENDER_EXTERNAL_URL" in os.environ and os.environ["RENDER_EXTERNAL_URL"].strip():
+        base_url = os.environ["RENDER_EXTERNAL_URL"].strip().rstrip("/")
+        if not base_url.startswith("http"):
+            base_url = f"https://{base_url}"
+        return base_url
     return "http://localhost:8501"
 
 def get_client_config():
-    if "GOOGLE_OAUTH_CLIENT_CONFIG" in os.environ:
+    if "GOOGLE_OAUTH_CLIENT_CONFIG" in os.environ and os.environ["GOOGLE_OAUTH_CLIENT_CONFIG"].strip():
         return json.loads(os.environ["GOOGLE_OAUTH_CLIENT_CONFIG"])
     if os.path.exists(CLIENT_SECRET_FILE):
         with open(CLIENT_SECRET_FILE, "r") as f:
@@ -107,54 +124,55 @@ def get_oauth_flow():
     cfg = get_client_config()
     if not cfg:
         return None
-    redirect_uri = get_redirect_uri()
-    flow = Flow.from_client_config(cfg, scopes=SCOPES, redirect_uri=redirect_uri)
-    return flow
+    return Flow.from_client_config(cfg, scopes=SCOPES, redirect_uri=get_redirect_uri())
 
-# Cookie / Session Recovery
+# Session and Persistent Cookie Hydration
 user_token_json = cookie_manager.get(cookie="user_oauth_credentials")
 
 if "user_credentials" not in st.session_state:
     if user_token_json:
         try:
-            token_dict = json.loads(user_token_json)
-            st.session_state["user_credentials"] = token_dict
+            st.session_state["user_credentials"] = json.loads(user_token_json)
         except Exception:
             st.session_state["user_credentials"] = None
     else:
         st.session_state["user_credentials"] = None
 
-# OAuth Callback handling from query params
+# Single-execution protected OAuth Callback Handler
 query_params = st.query_params
-if "code" in query_params and not st.session_state.get("user_credentials"):
-    code = query_params["code"]
-    flow = get_oauth_flow()
-    if flow:
-        try:
-            flow.fetch_token(code=code)
-            creds = flow.credentials
-            creds_data = {
-                "token": creds.token,
-                "refresh_token": creds.refresh_token,
-                "token_uri": creds.token_uri,
-                "client_id": creds.client_id,
-                "client_secret": creds.client_secret,
-                "scopes": creds.scopes
-            }
-            st.session_state["user_credentials"] = creds_data
-            
-            # Save in browser cookie with 24 hours expiry
-            cookie_manager.set(
-                "user_oauth_credentials",
-                json.dumps(creds_data),
-                expires_at=datetime.now() + timedelta(days=1)
-            )
-            st.query_params.clear()
-            st.rerun()
-        except Exception as e:
-            st.error(f"Authentication exchange error: {e}")
+if "code" in query_params:
+    auth_code = query_params["code"]
+    if st.session_state.get("last_processed_code") != auth_code and not st.session_state.get("user_credentials"):
+        st.session_state["last_processed_code"] = auth_code
+        flow = get_oauth_flow()
+        if flow:
+            try:
+                flow.fetch_token(code=auth_code)
+                creds = flow.credentials
+                creds_data = {
+                    "token": creds.token,
+                    "refresh_token": creds.refresh_token,
+                    "token_uri": creds.token_uri,
+                    "client_id": creds.client_id,
+                    "client_secret": creds.client_secret,
+                    "scopes": creds.scopes
+                }
+                st.session_state["user_credentials"] = creds_data
+                cookie_manager.set(
+                    "user_oauth_credentials",
+                    json.dumps(creds_data),
+                    expires_at=datetime.now() + timedelta(days=1)
+                )
+                st.query_params.clear()
+                st.rerun()
+            except Exception as e:
+                st.query_params.clear()
+                if "invalid_grant" not in str(e).lower():
+                    st.error(f"Authentication exchange error: {e}")
+                else:
+                    st.rerun()
 
-# 4. Sidebar Interface
+# 4. Sidebar Controls
 with st.sidebar:
     st.header("1. Parameters")
     all_cats = ["All Categories", "Sectoral", "Broad Market", "Thematic", "Strategy"]
@@ -164,6 +182,7 @@ with st.sidebar:
     selected_index = st.selectbox("Select Index", options=available_list)
     timeframe = st.radio("Select Timeframe", options=["Daily", "Weekly"], horizontal=True)
 
+    st.subheader("Date Range Selection")
     today = date.today()
     col_d1, col_d2 = st.columns(2)
     with col_d1:
@@ -176,30 +195,36 @@ with st.sidebar:
     st.divider()
     st.header("2. Google Account Link")
     if st.session_state.get("user_credentials"):
-        st.success(" Connected to your Personal Google Account (Session active for 24h)")
+        st.success("Connected to your Personal Google Account (Session active for 24h)")
         if st.button("🚪 Logout Google Account"):
             cookie_manager.delete("user_oauth_credentials")
             st.session_state["user_credentials"] = None
+            st.session_state["last_processed_code"] = None
             st.rerun()
     else:
         st.info("Log in with Google to push sheets directly to YOUR Drive.")
         flow = get_oauth_flow()
         if flow:
             auth_url, _ = flow.authorization_url(prompt='consent', access_type='offline')
-            st.markdown(f'<a href="{auth_url}" target="_self"><button style="background-color:#4285F4;color:white;padding:8px 16px;border:none;border-radius:4px;cursor:pointer;width:100%;">🔑 Sign In with Google</button></a>', unsafe_allow_html=True)
+            st.markdown(
+                f'<a href="{auth_url}" target="_self"><button style="background-color:#4285F4;color:white;padding:8px 16px;border:none;border-radius:4px;cursor:pointer;width:100%;">🔑 Sign In with Google</button></a>',
+                unsafe_allow_html=True
+            )
         else:
             st.warning("OAuth client secret missing.")
 
     st.divider()
+    st.header("3. Google Sheets Configuration")
     sheet_identifier = st.text_input("Spreadsheet Name or URL", value="NSE_Indices_Data")
     worksheet_name = st.text_input("Worksheet Tab Name", value=f"{selected_index[:20]}_{timeframe}")
 
-# 5. Core Data Fetching & Resampling
+# 5. Upstox Historical Data Fetcher (URL Encoded)
 def fetch_from_upstox(instrument_key, s_date, e_date):
     encoded_key = urllib.parse.quote(instrument_key)
     url = f"https://api.upstox.com/v2/historical-candle/{encoded_key}/day/{e_date.strftime('%Y-%m-%d')}/{s_date.strftime('%Y-%m-%d')}"
+    headers = {"Accept": "application/json", "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
     try:
-        res = requests.get(url, headers={"Accept": "application/json", "User-Agent": "Mozilla/5.0"}, timeout=15)
+        res = requests.get(url, headers=headers, timeout=15)
         if res.status_code == 200:
             candles = res.json().get("data", {}).get("candles", [])
             if candles:
@@ -213,6 +238,7 @@ def fetch_from_upstox(instrument_key, s_date, e_date):
         pass
     return pd.DataFrame()
 
+# 6. True Trading-Week Resampling (Handles Monday/Friday Market Holidays)
 def convert_to_weekly(daily_df):
     temp = daily_df.copy()
     temp["Date"] = pd.to_datetime(temp["Date"])
@@ -231,7 +257,7 @@ def convert_to_weekly(daily_df):
             })
     return pd.DataFrame(records).sort_values(by="Date", ascending=True).reset_index(drop=True)
 
-# 6. Push to User's Personal Google Sheet
+# 7. Push to User's Personal Google Sheet
 def push_to_user_google_sheet(dataframe, sheet_target, ws_title, creds_dict):
     try:
         creds = Credentials(
@@ -244,8 +270,6 @@ def push_to_user_google_sheet(dataframe, sheet_target, ws_title, creds_dict):
         )
         gc = gspread.authorize(creds)
         target = sheet_target.strip()
-
-        # Open existing sheet or create new in user's Drive
         try:
             sh = gc.open_by_url(target) if target.startswith("https://") else gc.open(target)
         except gspread.SpreadsheetNotFound:
@@ -266,16 +290,16 @@ def push_to_user_google_sheet(dataframe, sheet_target, ws_title, creds_dict):
     except Exception as e:
         return False, str(e)
 
-# 7. Render Data & UI
+# 8. Main Application Interface
 st.title("📈 Indian Stock Market Master Indices OHLC Explorer")
-st.caption("Inspect verified daily and weekly OHLC market data and export directly to YOUR personal Google Sheets.")
+st.caption("Inspect verified daily and weekly OHLC market data across all NSE & BSE indices and export directly to your personal Google Sheets.")
 
 if (fetch_btn or selected_index) and INDEX_ITEMS:
     if start_date > end_date:
         st.error("Invalid Date Range: Start Date must be earlier than End Date.")
     else:
         selected_meta = INDEX_ITEMS[selected_index]
-        with st.spinner(f"Loading '{selected_index}' from Upstox..."):
+        with st.spinner(f"Fetching data for '{selected_index}' from Upstox..."):
             raw_df = fetch_from_upstox(selected_meta["key"], start_date, end_date)
 
         if raw_df.empty:
@@ -304,7 +328,7 @@ if (fetch_btn or selected_index) and INDEX_ITEMS:
             st.divider()
             col_a, col_b = st.columns(2)
             with col_a:
-                st.markdown(f"#### ⚡ Push to YOUR Google Sheets")
+                st.markdown("#### ⚡ Push to YOUR Google Sheets")
                 if st.button("🚀 Push to Personal Google Sheet", type="primary"):
                     if not st.session_state.get("user_credentials"):
                         st.error("Please login with Google in the sidebar first!")
@@ -321,4 +345,9 @@ if (fetch_btn or selected_index) and INDEX_ITEMS:
             with col_b:
                 st.markdown("#### 📁 Local CSV Export")
                 csv_data = display_df.to_csv(index=False).encode('utf-8')
-                st.download_button("📥 Download CSV", csv_data, f"{selected_index}_{timeframe}.csv", "text/csv")
+                st.download_button(
+                    label=f"📥 Download {timeframe} CSV",
+                    data=csv_data,
+                    file_name=f"{selected_index}_{timeframe}.csv",
+                    mime="text/csv"
+                )
